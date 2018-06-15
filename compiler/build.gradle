@@ -1,0 +1,13 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation project(':annotation')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.squareup:javapoet:1.11.1'
+    implementation  group: 'com.google.auto.service', name: 'auto-service', version: '1.0-rc2'
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

@@ -1,0 +1,4 @@
+include ':appDemo'
+include ':retrofit'
+include ':compiler'
+include ':annotation'
