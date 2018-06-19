@@ -83,6 +83,15 @@ public class RetrofitManager {
         return (T) CacheMap().get(service.getName());
     }
 
+    public static <T> T create(Class<T> service, String baseUrl) {
+        String key = service.getName() + baseUrl;
+        if (CacheMap().containsKey(key)) {
+            T instance = retrofit(baseUrl).create(service);
+            CacheMap().put(key, instance);
+        }
+        return (T) CacheMap().get(key);
+    }
+
     private static HashMap<String, Object> CacheMap() {
         return apiCacheMap;
     }
@@ -171,15 +180,6 @@ public class RetrofitManager {
         }
 
         return ssfFactory;
-    }
-
-    public static <T> T create(Class<T> service, String baseUrl) {
-        String key = service.getName() + baseUrl;
-        if (CacheMap().containsKey(key)) {
-            T instance = retrofit(baseUrl).create(service);
-            CacheMap().put(key, instance);
-        }
-        return (T) CacheMap().get(key);
     }
 
     public static Config getConfig() {

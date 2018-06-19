@@ -69,10 +69,10 @@ public class FileUploadRequestBodyConverter implements Converter<FileUploadReque
 
         for (FormFile file:request.getFiles()){
             RequestBody requestFile =
-                    RequestBody.create(MediaType.parse("application/octet-stream"), file.getFile());
+                    RequestBody.create(MediaType.parse(file.getContentType()), file.getFile());
 
             MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("File", file.getFile().getName(), requestFile);
+                    MultipartBody.Part.createFormData(file.getParameterName(), file.getFilename(), requestFile);
             builder.addPart(body);
         }
 

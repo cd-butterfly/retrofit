@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 /**
+ *
  */
 public class FormFile implements Serializable {
     private byte[] data;
@@ -15,20 +16,23 @@ public class FormFile implements Serializable {
     private File file;
 
     private int fileSize;
-    private String filname;
+    private String filename;
     private String parameterName;
-    //private String contentType = "application/octet-stream";
-    private String contentType = "Content-Type: image/jpeg";
+    /**
+     *
+     * Http ContentType @link {http://tool.oschina.net/commons}
+     */
+    private String contentType = "application/octet-stream";
 
-    public FormFile(String filname, byte[] data, String parameterName, String contentType) {
+    public FormFile(String filename, byte[] data, String parameterName, String contentType) {
         this.data = data;
-        this.filname = filname;
+        this.filename = filename;
         this.parameterName = parameterName;
         if (contentType != null) this.contentType = contentType;
     }
 
-    public FormFile(String filname, File file, String parameterName, String contentType) {
-        this.filname = filname;
+    public FormFile(String filename, File file, String parameterName, String contentType) {
+        this.filename = filename;
         this.parameterName = parameterName;
         this.file = file;
         try {
@@ -40,12 +44,12 @@ public class FormFile implements Serializable {
     }
 
 
-    public FormFile(InputStream inStream, int fileSize, String filname,
+    public FormFile(InputStream inStream, int fileSize, String filename,
                     String parameterName, String contentType) {
         super();
         this.inStream = inStream;
         this.fileSize = fileSize;
-        this.filname = filname;
+        this.filename = filename;
         this.parameterName = parameterName;
         this.contentType = contentType;
     }
@@ -85,12 +89,12 @@ public class FormFile implements Serializable {
         return data;
     }
 
-    public String getFilname() {
-        return filname;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setFilname(String filname) {
-        this.filname = filname;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getParameterName() {
