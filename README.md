@@ -20,10 +20,6 @@ or Gradle:
 implementation 'com.github.cd-butterfly:retrofit:1.0.0-SNAPSHOT'
 annotationProcessor  'com.github.cd-butterfly:retrofit-compiler:1.0.0-SNAPSHOT'
 ```
-project build.grale
-```
-maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-```
 
 License
 =======
