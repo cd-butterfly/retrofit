@@ -18,5 +18,12 @@ public @interface Service {
      * default name is the class name
      *
      */
-    String value() default "";
+    String alias() default "";
+
+    /**
+     *
+     * base url,if not set,default baseUrl is config's baseUrl
+     *
+     */
+    String baseUrl() default "";
 }

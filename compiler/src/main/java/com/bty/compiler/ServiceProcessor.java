@@ -50,25 +50,35 @@ public class ServiceProcessor extends AbstractProcessor {
 
             Service annotation = element.getAnnotation(Service.class);
 
-            String value = annotation.value();
+            String alias = annotation.alias();
+
+            String baseUrl = annotation.baseUrl();
 
             String methodName = "get";
 
-            if (!value.equals("")) {
-                methodName += value;
+            if (!alias.equals("")) {
+                methodName += alias;
             } else {
                 methodName += element.getSimpleName();
             }
 
             TypeElement typeElement = (TypeElement) element;
 
-            MethodSpec methodSpec = MethodSpec.methodBuilder(methodName).
+            MethodSpec.Builder builder = MethodSpec.methodBuilder(methodName).
                     addModifiers(Modifier.PUBLIC, Modifier.STATIC).
-                    returns(ClassName.bestGuess(element.getSimpleName().toString())).
-                    addStatement("return $T.create($T.class)",RETROFIT,ClassName.bestGuess(typeElement.getQualifiedName().toString())).build();
+                    returns(ClassName.bestGuess(element.getSimpleName().toString()));
+
+            MethodSpec methodSpec;
+
+            if (!baseUrl.equals("")) {
+                methodSpec = builder.
+                        addStatement("return $T.create($T.class,$S)",RETROFIT,ClassName.bestGuess(typeElement.getQualifiedName().toString()),baseUrl).build();
+            } else {
+                methodSpec = builder.
+                        addStatement("return $T.create($T.class)",RETROFIT,ClassName.bestGuess(typeElement.getQualifiedName().toString())).build();
+            }
 
             methodSpecs.add(methodSpec);
-
         }
 
         TypeSpec.Builder apiBuilder = TypeSpec.classBuilder("Api")

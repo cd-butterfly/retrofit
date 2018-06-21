@@ -84,12 +84,16 @@ public class RetrofitManager {
     }
 
     public static <T> T create(Class<T> service, String baseUrl) {
-        String key = service.getName() + baseUrl;
-        if (CacheMap().containsKey(key)) {
-            T instance = retrofit(baseUrl).create(service);
-            CacheMap().put(key, instance);
+        if (TextUtils.isEmpty(baseUrl)) {
+            return create(service);
+        } else {
+            String key = service.getName() + baseUrl;
+            if (CacheMap().containsKey(key)) {
+                T instance = retrofit(baseUrl).create(service);
+                CacheMap().put(key, instance);
+            }
+            return (T) CacheMap().get(key);
         }
-        return (T) CacheMap().get(key);
     }
 
     private static HashMap<String, Object> CacheMap() {
