@@ -17,8 +17,8 @@ grab via Maven:
 ```
 or Gradle:
 ```groovy
-implementation 'com.github.cd-butterfly:retrofit:1.0.0-SNAPSHOT'
-annotationProcessor  'com.github.cd-butterfly:retrofit-compiler:1.0.0-SNAPSHOT'
+implementation 'com.github.cd-butterfly:retrofit:1.0.2'
+annotationProcessor  'com.github.cd-butterfly:retrofit-compiler:1.0.2'
 ```
 
 License
