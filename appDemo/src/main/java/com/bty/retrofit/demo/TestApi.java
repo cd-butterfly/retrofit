@@ -16,7 +16,7 @@ import retrofit2.http.Url;
 /**
  * Created by duo.chen on 2018/6/12
  */
-@Service(alias = "TestApiName",baseUrl = "htpp://www.baidu.com")
+@Service(alias = "TestApiName",baseUrl = "http://www.baidu.com")
 public interface TestApi {
 
     /**
