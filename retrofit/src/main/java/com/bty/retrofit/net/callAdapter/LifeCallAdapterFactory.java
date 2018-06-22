@@ -152,7 +152,7 @@ public class LifeCallAdapterFactory extends CallAdapter.Factory {
 
     }
 
-    public static abstract class LifeCallback<T> implements Callback {
+    public static abstract class LifeCallback<T> implements Callback<T> {
 
         private WeakReference<LifecycleOwner> lifecycleOwnerWR;
 

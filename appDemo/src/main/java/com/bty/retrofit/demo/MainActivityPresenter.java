@@ -8,6 +8,8 @@ import com.bty.retrofit.net.bean.JsonBeanResponse;
 import com.bty.retrofit.net.body.ProgressResponseBody;
 import com.bty.retrofit.net.callAdapter.LifeCallAdapterFactory;
 
+import java.io.File;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -25,12 +27,12 @@ public class MainActivityPresenter{
     void request(){
         Api.getTestApiName().getCommonDataVersion(new CityBean()).enqueue(new LifeCallAdapterFactory.LifeCallback<JsonBeanResponse>(mainActivity) {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<JsonBeanResponse> call, Response<JsonBeanResponse> response) {
                 Log.i("Retrofit",response.body().toString());
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(Call<JsonBeanResponse> call, Throwable t) {
 
             }
         });
@@ -48,14 +50,14 @@ public class MainActivityPresenter{
                 Log.i("Retrofit","bytesRead "  + bytesRead + " contentLength " + contentLength);
             }
         });
-        Api.getTestApiName().download(url,fileDownloadRequest).enqueue(new LifeCallAdapterFactory.LifeCallback<JsonBeanResponse>(mainActivity) {
+        Api.getTestApiName().download(url,fileDownloadRequest).enqueue(new LifeCallAdapterFactory.LifeCallback<File>(mainActivity) {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<File> call, Response<File> response) {
 
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(Call<File> call, Throwable t) {
 
             }
         });
