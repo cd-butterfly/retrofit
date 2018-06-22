@@ -2,7 +2,6 @@ package com.bty.retrofit.demo;
 
 import android.util.Log;
 
-import com.bty.retrofit.Api;
 import com.bty.retrofit.demo.bean.CityBean;
 import com.bty.retrofit.net.bean.FileDownloadRequest;
 import com.bty.retrofit.net.bean.JsonBeanResponse;

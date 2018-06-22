@@ -45,8 +45,12 @@ public class ServiceProcessor extends AbstractProcessor {
 
         ArrayList<MethodSpec> methodSpecs = new ArrayList<>();
 
+        String packageName = "";
+
         for (Element element : roundEnvironment.getElementsAnnotatedWith(Service.class)) {
             if (!SuperficialValidation.validateElement(element)) continue;
+
+            packageName = ClassName.bestGuess(element.asType().toString()).packageName();
 
             Service annotation = element.getAnnotation(Service.class);
 
@@ -72,10 +76,10 @@ public class ServiceProcessor extends AbstractProcessor {
 
             if (!baseUrl.equals("")) {
                 methodSpec = builder.
-                        addStatement("return $T.create($T.class,$S)",RETROFIT,ClassName.bestGuess(typeElement.getQualifiedName().toString()),baseUrl).build();
+                        addStatement("return $T.create($T.class,$S)", RETROFIT, ClassName.bestGuess(typeElement.getQualifiedName().toString()), baseUrl).build();
             } else {
                 methodSpec = builder.
-                        addStatement("return $T.create($T.class)",RETROFIT,ClassName.bestGuess(typeElement.getQualifiedName().toString())).build();
+                        addStatement("return $T.create($T.class)", RETROFIT, ClassName.bestGuess(typeElement.getQualifiedName().toString())).build();
             }
 
             methodSpecs.add(methodSpec);
@@ -89,11 +93,15 @@ public class ServiceProcessor extends AbstractProcessor {
         }
 
         try {
-            JavaFile javaFile = JavaFile.builder("com.bty.retrofit", apiBuilder.build())
-                    .addFileComment("This codes are generated automatically. Do not modify!")
-                    .build();
+            if (packageName != null && !packageName.equals("")) {
 
-            javaFile.writeTo(filer);
+                messager.printMessage(Diagnostic.Kind.NOTE,packageName);
+
+                JavaFile javaFile = JavaFile.builder(packageName, apiBuilder.build())
+                        .addFileComment("This codes are generated automatically. Do not modify!")
+                        .build();
+                javaFile.writeTo(filer);
+            }
         } catch (IOException e) {
             error(e.toString());
         }
@@ -101,8 +109,8 @@ public class ServiceProcessor extends AbstractProcessor {
         return true;
     }
 
-    private void error(String string){
-        messager.printMessage(Diagnostic.Kind.WARNING,string);
+    private void error(String string) {
+        messager.printMessage(Diagnostic.Kind.WARNING, string);
     }
 
     @Override
