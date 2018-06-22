@@ -88,7 +88,7 @@ public class RetrofitManager {
             return create(service);
         } else {
             String key = service.getName() + baseUrl;
-            if (CacheMap().containsKey(key)) {
+            if (!CacheMap().containsKey(key)) {
                 T instance = retrofit(baseUrl).create(service);
                 CacheMap().put(key, instance);
             }
