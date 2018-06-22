@@ -201,10 +201,6 @@ public class RetrofitManager {
         private Interceptor interceptor;
         private Converter.Factory converterFactory;
 
-        public Config() {
-            new Config(new Builder());
-        }
-
         Config(Builder builder) {
             this.log = builder.log;
             this.baseUrl = builder.baseUrl;
