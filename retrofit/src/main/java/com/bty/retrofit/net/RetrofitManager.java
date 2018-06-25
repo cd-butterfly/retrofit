@@ -2,6 +2,7 @@ package com.bty.retrofit.net;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.bty.retrofit.net.callAdapter.LifeCallAdapterFactory;
 import com.bty.retrofit.net.convert.fileConvert.FileDownloadConverterFactory;
@@ -40,6 +41,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class RetrofitManager {
 
+    private final static String TAG = "RetrofitManager";
+
     private static Config config;
 
     private static HashMap<String, Object> apiCacheMap = new HashMap<>();
@@ -71,7 +74,9 @@ public class RetrofitManager {
         if (RetrofitManager.config == null) {
             RetrofitManager.config = config;
         } else {
-            throw new SecurityException("init can not be called twice");
+            if (config.isLog()) {
+                Log.i(TAG, "init can not be called twice,ignore");
+            }
         }
     }
 
@@ -137,10 +142,10 @@ public class RetrofitManager {
 
     private static OkHttpClient getClient(boolean log) {
 
-        /**Choosing between application and network interceptors
-         * https://github.com/square/okhttp/wiki/Interceptors
-         *
-         * addNetworkInterceptor(loggingInterceptor)
+        /* Choosing between application and network interceptors
+          https://github.com/square/okhttp/wiki/Interceptors
+
+          addNetworkInterceptor(loggingInterceptor)
          */
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         if (!log) {
@@ -197,7 +202,7 @@ public class RetrofitManager {
         private Sign.Factory factory;
         private X509TrustManager certs;
         private SSLSocketFactory sslSocketFactory;
-        private HashMap<String, String> headers = new HashMap<>();
+        private HashMap<String, String> headers;
         private Interceptor interceptor;
         private Converter.Factory converterFactory;
 
@@ -212,7 +217,7 @@ public class RetrofitManager {
             this.converterFactory = builder.converterFactory;
         }
 
-        public boolean isLog() {
+        boolean isLog() {
             return log;
         }
 
