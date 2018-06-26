@@ -19,6 +19,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -168,7 +169,10 @@ public class RetrofitManager {
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(new FileDownloadInterceptor())
                 .sslSocketFactory(sslSocketFactory, x509TrustManager)
-                .cookieJar(cookieJar);
+                .cookieJar(cookieJar)
+                .connectTimeout(config.connectTimeout,TimeUnit.SECONDS)
+                .writeTimeout(config.writeTimeout,TimeUnit.SECONDS)
+                .readTimeout(config.readTimeout,TimeUnit.SECONDS);
 
         if (log) {
             builder.addNetworkInterceptor(new StethoInterceptor());
@@ -205,6 +209,9 @@ public class RetrofitManager {
         private HashMap<String, String> headers;
         private Interceptor interceptor;
         private Converter.Factory converterFactory;
+        private int writeTimeout;
+        private int connectTimeout;
+        private int readTimeout;
 
         Config(Builder builder) {
             this.log = builder.log;
@@ -215,6 +222,9 @@ public class RetrofitManager {
             this.headers = builder.headers;
             this.interceptor = builder.interceptor;
             this.converterFactory = builder.converterFactory;
+            this.connectTimeout = builder.connectTimeout;
+            this.readTimeout = builder.readTimeout;
+            this.writeTimeout = builder.writeTimeout;
         }
 
         boolean isLog() {
@@ -259,6 +269,9 @@ public class RetrofitManager {
 
         public static final class Builder {
 
+            private int writeTimeout;
+            private int connectTimeout;
+            private int readTimeout;
             private boolean log;
             private String baseUrl;
             private Sign.Factory signFactory;
@@ -267,6 +280,12 @@ public class RetrofitManager {
             private HashMap<String, String> headers = new HashMap<>();
             private Interceptor interceptor;
             private Converter.Factory converterFactory;
+
+            public Builder() {
+                connectTimeout = 20_000;
+                readTimeout = 20_000;
+                writeTimeout = 20_000;
+            }
 
             public Builder setLog(boolean log) {
                 this.log = log;
@@ -306,6 +325,18 @@ public class RetrofitManager {
             public Builder setConverterFactory(Converter.Factory converterFactory) {
                 this.converterFactory = converterFactory;
                 return this;
+            }
+
+            public void setConnectTimeout(int connectTimeout) {
+                this.connectTimeout = connectTimeout;
+            }
+
+            public void setReadTimeout(int readTimeout) {
+                this.readTimeout = readTimeout;
+            }
+
+            public void setWriteTimeout(int writeTimeout) {
+                this.writeTimeout = writeTimeout;
             }
 
             public Config build() {
