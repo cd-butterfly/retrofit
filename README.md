@@ -11,9 +11,16 @@ grab via Maven:
 <dependency>
   <groupId>com.github.cd-butterfly</groupId>
   <artifactId>retrofit</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.4-SNAPSHOT</version>
   <type>aar</type>
 </dependency>
+
+<dependency>
+  <groupId>com.github.cd-butterfly</groupId>
+  <artifactId>retrofit-compiler</artifactId>
+  <version>1.0.4-SNAPSHOT</version>
+</dependency>
+
 ```
 or Gradle:
 
