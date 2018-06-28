@@ -16,9 +16,20 @@ grab via Maven:
 </dependency>
 ```
 or Gradle:
+
+project build.gradle :
+
 ```groovy
-implementation 'com.github.cd-butterfly:retrofit:1.0.2'
-annotationProcessor  'com.github.cd-butterfly:retrofit-compiler:1.0.2'
+repositories {
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+```
+
+module build.gradle
+
+```groovy
+implementation 'com.github.cd-butterfly:retrofit:1.0.4-SNAPSHOT'
+annotationProcessor  'com.github.cd-butterfly:retrofit-compiler:1.0.4-SNAPSHOT'
 ```
 
 License
