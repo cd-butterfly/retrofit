@@ -1,8 +1,6 @@
 package com.bty.retrofit.net.serurity.sign;
 
 
-import android.support.annotation.Nullable;
-
 import com.bty.retrofit.net.serurity.Sign;
 
 import java.util.Map;
@@ -20,12 +18,12 @@ public class DefaultSign implements Sign {
 
     @Override
     public Map<String, Object> sign(Map map, String s) {
-        return null;
+        return map;
     }
 
     @Override
     public String sign(String source, String signKey) {
-        return null;
+        return source;
     }
 
     @Override
