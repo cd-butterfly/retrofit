@@ -170,9 +170,9 @@ public class RetrofitManager {
                 .addInterceptor(new FileDownloadInterceptor())
                 .sslSocketFactory(sslSocketFactory, x509TrustManager)
                 .cookieJar(cookieJar)
-                .connectTimeout(config.connectTimeout,TimeUnit.SECONDS)
-                .writeTimeout(config.writeTimeout,TimeUnit.SECONDS)
-                .readTimeout(config.readTimeout,TimeUnit.SECONDS);
+                .connectTimeout(config.connectTimeout,TimeUnit.MILLISECONDS)
+                .writeTimeout(config.writeTimeout,TimeUnit.MILLISECONDS)
+                .readTimeout(config.readTimeout,TimeUnit.MILLISECONDS);
 
         if (log) {
             builder.addNetworkInterceptor(new StethoInterceptor());
