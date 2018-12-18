@@ -1,13 +1,17 @@
 package com.bty.retrofit.demo;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.bty.retrofit.demo.bean.CityBean;
 import com.bty.retrofit.net.bean.FileDownloadRequest;
+import com.bty.retrofit.net.bean.FormFile;
 import com.bty.retrofit.net.bean.JsonBeanResponse;
 import com.bty.retrofit.net.body.ProgressResponseBody;
 import com.bty.retrofit.net.callAdapter.LifeCallAdapterFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import retrofit2.Call;
@@ -61,9 +65,14 @@ public class MainActivityPresenter{
 
             }
         });
+    }
 
-
-
+    void upLoad(){
+        //sample for compress image
+        Bitmap bmp = BitmapFactory.decodeFile("");
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);
+        FormFile formFile = new FormFile("",bos.toByteArray(),"","");
     }
 
 }

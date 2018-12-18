@@ -67,13 +67,18 @@ public class FileUploadRequestBodyConverter implements Converter<FileUploadReque
             }
         }
 
-        for (FormFile file:request.getFiles()){
-            RequestBody requestFile =
-                    RequestBody.create(MediaType.parse(file.getContentType()), file.getFile());
-
-            MultipartBody.Part body =
-                    MultipartBody.Part.createFormData(file.getParameterName(), file.getFilename(), requestFile);
-            builder.addPart(body);
+        for (FormFile file:request.getFiles()) {
+            RequestBody requestBody = null;
+            if (file.getFile() != null) {
+                requestBody = RequestBody.create(MediaType.parse(file.getContentType()), file.getFile());
+            } else if (file.getData() != null) {
+                requestBody = RequestBody.create(MediaType.parse(file.getContentType()), file.getData());
+            }
+            if (requestBody != null) {
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData(file.getParameterName(), file.getFilename(), requestBody);
+                builder.addPart(body);
+            }
         }
 
         return builder.build();
