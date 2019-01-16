@@ -5,11 +5,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * ×Ö·û´®¹¤¾ßÀà
+ * å­—ç¬¦ä¸²å·¥å…·ç±»
  */
 public class StringUtils {
     /**
-     * ¼ì²éÖ¸¶¨µÄ×Ö·û´®ÊÇ·ñÎª¿Õ¡£
+     * æ£€æŸ¥æŒ‡å®šçš„å­—ç¬¦ä¸²æ˜¯å¦ä¸ºç©ºã€‚
      * <ul>
      * <li>SysUtils.isEmpty(null) = true</li>
      * <li>SysUtils.isEmpty("") = true</li>
@@ -17,7 +17,7 @@ public class StringUtils {
      * <li>SysUtils.isEmpty("abc") = false</li>
      * </ul>
      *
-     * @param value ´ı¼ì²éµÄ×Ö·û´®
+     * @param value å¾…æ£€æŸ¥çš„å­—ç¬¦ä¸²
      * @return true/false
      */
     public static boolean isEmpty(String value) {
@@ -34,7 +34,7 @@ public class StringUtils {
     }
 
     /**
-     * ¼ì²éÖ¸¶¨µÄ×Ö·û´®ÁĞ±íÊÇ·ñ²»Îª¿Õ¡£
+     * æ£€æŸ¥æŒ‡å®šçš„å­—ç¬¦ä¸²åˆ—è¡¨æ˜¯å¦ä¸ä¸ºç©ºã€‚
      */
     public static boolean areNotEmpty(String... values) {
         boolean result = true;
@@ -50,7 +50,7 @@ public class StringUtils {
 
 
     /**
-     * ¼ì²é¶ÔÏóÊÇ·ñÎªÊı×ÖĞÍ×Ö·û´®¡£
+     * æ£€æŸ¥å¯¹è±¡æ˜¯å¦ä¸ºæ•°å­—å‹å­—ç¬¦ä¸²ã€‚
      */
     public static boolean isNumeric(Object obj) {
         if (obj == null) {
@@ -70,21 +70,21 @@ public class StringUtils {
     }
 
     /**
-     * ¼ì²éÖ¸¶¨×Ö·û´®ÊÇ·ñÎªÊÖ»úºÅ
+     * æ£€æŸ¥æŒ‡å®šå­—ç¬¦ä¸²æ˜¯å¦ä¸ºæ‰‹æœºå·
      */
     public static boolean isMobileNO(String text) {
         return isMatch(text, "^(1[0-9])\\d{9}$");
     }
 
     /**
-     * ¼ì²éÃÜÂë¸ñÊ½ÊÇ·ñÕıÈ·(Ö»°üº¬×ÖÄ¸+Êı×Ö)
+     * æ£€æŸ¥å¯†ç æ ¼å¼æ˜¯å¦æ­£ç¡®(åªåŒ…å«å­—æ¯+æ•°å­—)
      */
     public static boolean isPassword(String text) {
         return isMatch(text, "^\\w{6,14}$");
     }
 
     /**
-     * ¼ì²éÊÇ·ñÕæÊµĞÕÃû
+     * æ£€æŸ¥æ˜¯å¦çœŸå®å§“å
      *
      * @param text
      * @return
@@ -94,8 +94,8 @@ public class StringUtils {
     }
 
     /**
-     * ¼ì²éÊÇ·ñQQºÅ
-     * ÒÔ1-9¿ªÍ·µÄ5-12Î»Êı×Ö
+     * æ£€æŸ¥æ˜¯å¦QQå·
+     * ä»¥1-9å¼€å¤´çš„5-12ä½æ•°å­—
      *
      * @param text
      * @return
@@ -105,7 +105,7 @@ public class StringUtils {
     }
 
     /**
-     * ¼ì²éÊÇ·ñ·ûºÏ·´À¡ÄÚÈİ¸ñÊ½
+     * æ£€æŸ¥æ˜¯å¦ç¬¦åˆåé¦ˆå†…å®¹æ ¼å¼
      *
      * @param text
      * @return
@@ -115,7 +115,7 @@ public class StringUtils {
     }
 
     /**
-     * ¼ì²éÊÇ·ñÎªE-Mail
+     * æ£€æŸ¥æ˜¯å¦ä¸ºE-Mail
      *
      * @param text
      * @return
@@ -125,7 +125,7 @@ public class StringUtils {
     }
 
     /**
-     * ¼ì²éÊÇ·ñÎªÑéÖ¤Âë
+     * æ£€æŸ¥æ˜¯å¦ä¸ºéªŒè¯ç 
      *
      * @param text
      * @return
@@ -135,7 +135,7 @@ public class StringUtils {
     }
 
     /**
-     * ¼ì²éÊÇ·ñÊÇ¹«Ë¾Ãû
+     * æ£€æŸ¥æ˜¯å¦æ˜¯å…¬å¸å
      *
      * @param text
      * @return
@@ -145,7 +145,7 @@ public class StringUtils {
     }
 
     /**
-     * ¼ì²éÊÇ·ñÊÇÃÅµêÃû
+     * æ£€æŸ¥æ˜¯å¦æ˜¯é—¨åº—å
      *
      * @param text
      * @return
@@ -155,7 +155,7 @@ public class StringUtils {
     }
 
     /**
-     * ¼ì²éÊÇ·ñÎªurl
+     * æ£€æŸ¥æ˜¯å¦ä¸ºurl
      *
      * @param text
      * @return
@@ -172,7 +172,7 @@ public class StringUtils {
     }
 
     /**
-     * ×Ö·û´®×ªÕûÊı
+     * å­—ç¬¦ä¸²è½¬æ•´æ•°
      *
      * @param str
      * @param defValue
@@ -189,7 +189,7 @@ public class StringUtils {
     }
 
     /**
-     * ¼ì²é×Ö·û´®ÊÇtrue»¹ÊÇfalse
+     * æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯trueè¿˜æ˜¯false
      *
      * @param str
      * @return true | false
@@ -203,7 +203,7 @@ public class StringUtils {
     }
 
     /**
-     * list×ªstring
+     * listè½¬string
      *
      * @param list
      * @return
@@ -233,10 +233,10 @@ public class StringUtils {
 
 
     /**
-     * ²é¿´×Ö·û´®ÖĞÓĞ¼¸¸öÌØ¶¨×Ö·û
+     * æŸ¥çœ‹å­—ç¬¦ä¸²ä¸­æœ‰å‡ ä¸ªç‰¹å®šå­—ç¬¦
      *
-     * @param str ×Ö·û´®
-     * @param des ÌØ¶¨×Ö·û
+     * @param str å­—ç¬¦ä¸²
+     * @param des ç‰¹å®šå­—ç¬¦
      * @return
      */
     public static int getStringNum(String str, String des) {
@@ -250,7 +250,7 @@ public class StringUtils {
     }
 
     /**
-     * ½ØÈ¡ÌØ¶¨×Ö·ûºóµÄÊıÖµ
+     * æˆªå–ç‰¹å®šå­—ç¬¦åçš„æ•°å€¼
      *
      * @param str
      * @return
@@ -266,7 +266,7 @@ public class StringUtils {
     }
 
     /**
-     * ½ØÈ¡ÌØ¶¨×Ö·ûÇ°µÄÊıÖµ
+     * æˆªå–ç‰¹å®šå­—ç¬¦å‰çš„æ•°å€¼
      *
      * @param str
      * @return
@@ -283,7 +283,7 @@ public class StringUtils {
     }
 
     /**
-     * È¥³ı×Ö·û´®2Í·µÄ»»ĞĞ·ûºÍÎŞÒâÒå×Ö·û
+     * å»é™¤å­—ç¬¦ä¸²2å¤´çš„æ¢è¡Œç¬¦å’Œæ— æ„ä¹‰å­—ç¬¦
      *
      * @param source
      * @return
@@ -313,7 +313,7 @@ public class StringUtils {
     }
 
     /**
-     * È¥³ıÀ¨ºÅ
+     * å»é™¤æ‹¬å·
      *
      * @param source
      * @return
@@ -328,10 +328,10 @@ public class StringUtils {
     }
 
     /**
-     * ÅĞ¶ÏÊÇ·ñÎª¸¡µãÊı£¬°üÀ¨doubleºÍfloat
+     * åˆ¤æ–­æ˜¯å¦ä¸ºæµ®ç‚¹æ•°ï¼ŒåŒ…æ‹¬doubleå’Œfloat
      *
-     * @param str ´«ÈëµÄ×Ö·û´®
-     * @return ÊÇ¸¡µãÊı·µ»Øtrue, ·ñÔò·µ»Øfalse
+     * @param str ä¼ å…¥çš„å­—ç¬¦ä¸²
+     * @return æ˜¯æµ®ç‚¹æ•°è¿”å›true, å¦åˆ™è¿”å›false
      */
     public static boolean isDouble(String str) {
         Pattern pattern = Pattern.compile("^[-\\+]?[.\\d]*$");
@@ -339,7 +339,7 @@ public class StringUtils {
     }
 
     /**
-     * »ñÈ¡×Ö·û´® Èô´«ÈëÊı¾İÎªdouble»òfloatÀàĞÍÔò×ª»»ºóÈ¥µô0»ò.0
+     * è·å–å­—ç¬¦ä¸² è‹¥ä¼ å…¥æ•°æ®ä¸ºdoubleæˆ–floatç±»å‹åˆ™è½¬æ¢åå»æ‰0æˆ–.0
      * @param obj
      * @return
      */
@@ -378,8 +378,8 @@ public class StringUtils {
             return "";
         }
         if(str.indexOf(".") > 0){
-            str = str.replaceAll("0+?$", "");//È¥µô¶àÓàµÄ0
-            str = str.replaceAll("[.]$", "");//Èç×îºóÒ»Î»ÊÇ.ÔòÈ¥µô
+            str = str.replaceAll("0+?$", "");//å»æ‰å¤šä½™çš„0
+            str = str.replaceAll("[.]$", "");//å¦‚æœ€åä¸€ä½æ˜¯.åˆ™å»æ‰
         }
         return str;
     }

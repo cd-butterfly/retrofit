@@ -6,16 +6,16 @@ import com.bty.retrofit.net.bean.JsonBeanRequest;
 /**
  *
  */
-public class CityBean extends JsonBeanRequest {
+public class PostBean extends JsonBeanRequest {
 
 	public String City;
 
 	public String Platform;
 
 
-	public CityBean() {
+	public PostBean() {
 		super();
-		this.Platform = "android_zf";
+		this.Platform = "test";
 	}
 
 	public String getCity() {

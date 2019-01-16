@@ -1,36 +1,26 @@
 package com.bty.retrofit.demo;
 
 import com.bty.annotation.Service;
-import com.bty.retrofit.demo.bean.CityBean;
+import com.bty.retrofit.demo.bean.PostBean;
 import com.bty.retrofit.net.bean.FileDownloadRequest;
 import com.bty.retrofit.net.bean.JsonBeanResponse;
-import com.bty.retrofit.net.platform.DoNetPlatform;
+import retrofit2.Call;
+import retrofit2.http.*;
 
 import java.io.File;
-
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
-import retrofit2.http.Url;
 
 /**
  * Created by duo.chen on 2018/6/12
  */
-@Service(alias = "TestApiName",baseUrl = "http://www.baidu.com")
+@Service(alias = "TestApi",baseUrl = "http://t.weather.sojson.com/")
 public interface TestApi {
 
-    /**
-     */
-    @DoNetPlatform
-    @POST("api/common/getdataversion")
-    Call<JsonBeanResponse> getCommonDataVersion(@Body CityBean bean);
+    @GET("/api/weather/city/{cityCode}")
+    Call<JsonBeanResponse> getweather(@Path("cityCode") String code);
 
 
-    @GET("/list")
-    Call<JsonBeanResponse> getName(@Query(value = "name") String name);
-
+    @POST("http://10.55.5.34:8081/api/auth/token/issue")
+    Call<JsonBeanResponse> testPost(@Body PostBean postBean);
 
     @POST
     Call<File> download(@Url String url, @Body FileDownloadRequest fileDownloadRequest);

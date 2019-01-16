@@ -161,10 +161,6 @@ public class RetrofitManager {
         //config headers,timeout,interceptors
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        if (config.interceptor != null) {
-            builder.addInterceptor(config.interceptor);
-        }
-
         builder.addInterceptor(new HeaderInterceptor(config.headers))
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(new FileDownloadInterceptor())
@@ -173,6 +169,12 @@ public class RetrofitManager {
                 .connectTimeout(config.connectTimeout,TimeUnit.MILLISECONDS)
                 .writeTimeout(config.writeTimeout,TimeUnit.MILLISECONDS)
                 .readTimeout(config.readTimeout,TimeUnit.MILLISECONDS);
+
+        if (config.interceptors != null && config.interceptors.size() > 0) {
+            for (Interceptor interceptor : config.interceptors) {
+                builder.addInterceptor(interceptor);
+            }
+        }
 
         if (log) {
             builder.addNetworkInterceptor(new StethoInterceptor());
@@ -207,7 +209,7 @@ public class RetrofitManager {
         private X509TrustManager certs;
         private SSLSocketFactory sslSocketFactory;
         private HashMap<String, String> headers;
-        private Interceptor interceptor;
+        private List<Interceptor> interceptors;
         private Converter.Factory converterFactory;
         private int writeTimeout;
         private int connectTimeout;
@@ -220,7 +222,7 @@ public class RetrofitManager {
             this.certs = builder.certs;
             this.sslSocketFactory = builder.sslSocketFactory;
             this.headers = builder.headers;
-            this.interceptor = builder.interceptor;
+            this.interceptors = builder.interceptors;
             this.converterFactory = builder.converterFactory;
             this.connectTimeout = builder.connectTimeout;
             this.readTimeout = builder.readTimeout;
@@ -278,7 +280,7 @@ public class RetrofitManager {
             private X509TrustManager certs;
             private SSLSocketFactory sslSocketFactory;
             private HashMap<String, String> headers = new HashMap<>();
-            private Interceptor interceptor;
+            private List<Interceptor> interceptors;
             private Converter.Factory converterFactory;
 
             public Builder() {
@@ -317,8 +319,8 @@ public class RetrofitManager {
                 return this;
             }
 
-            public Builder setInterceptor(Interceptor interceptor) {
-                this.interceptor = interceptor;
+            public Builder setInterceptors(List<Interceptor> interceptors) {
+                this.interceptors = interceptors;
                 return this;
             }
 

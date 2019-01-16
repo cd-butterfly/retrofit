@@ -1,8 +1,13 @@
 package com.bty.retrofit.demo;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
+import com.bty.retrofit.demo.log.FloatingWindow.FloatingButtonService;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -13,16 +18,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mainActivityPresenter = new MainActivityPresenter(this);
-
     }
 
-    public void download(View view){
-        mainActivityPresenter.download();
+    public void testdownload(View view) {
+        mainActivityPresenter.testdownload();
     }
 
-    public void request(View view) {
-        mainActivityPresenter.request();
+    public void testGet(View view) {
+        mainActivityPresenter.testGet();
+    }
+
+    public void testPost(View view) {
+        mainActivityPresenter.testPost();
+    }
+
+    public void startFloatingwindow(View view) {
+        if (!Settings.canDrawOverlays(this)) {
+            Toast.makeText(this, "当前无权限，请授权", Toast.LENGTH_SHORT);
+            startActivityForResult(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName())), 0);
+        } else {
+            startService(new Intent(MainActivity.this, FloatingButtonService.class));
+        }
     }
 }

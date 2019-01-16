@@ -25,7 +25,7 @@ import java.util.TreeMap;
  */
 public class SignUtil {
     /**
-     * md5签名
+     * md5绛惧悕
      *
      */
     public static String md5Signature(Map params, String secret) {
@@ -59,7 +59,7 @@ public class SignUtil {
     }
 
     /**
-     * 获取签名
+     * 鑾峰彇绛惧悕
      *
      */
     public static String sign(String json, String secret) {
@@ -142,7 +142,7 @@ public class SignUtil {
         Iterator it = jsonObj.keys();
         while (it.hasNext()) {
             String key = (String) it.next();
-            // 过滤token
+            // 杩囨护token
             if (!key.toLowerCase().equals("token")) {
                 try {
                     Object value = jsonObj.get(key);

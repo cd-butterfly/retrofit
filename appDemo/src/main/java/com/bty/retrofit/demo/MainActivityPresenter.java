@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.bty.retrofit.demo.bean.CityBean;
+import com.bty.retrofit.demo.bean.PostBean;
 import com.bty.retrofit.net.bean.FileDownloadRequest;
 import com.bty.retrofit.net.bean.FormFile;
 import com.bty.retrofit.net.bean.JsonBeanResponse;
@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -29,10 +30,14 @@ public class MainActivityPresenter{
     }
 
     void request(){
-        Api.getTestApiName().getCommonDataVersion(new CityBean()).enqueue(new LifeCallAdapterFactory.LifeCallback<JsonBeanResponse>(mainActivity) {
+
+    }
+
+    void testGet(){
+        Api.getTestApi().getweather("101020100").enqueue(new Callback<JsonBeanResponse>() {
             @Override
             public void onResponse(Call<JsonBeanResponse> call, Response<JsonBeanResponse> response) {
-                Log.i("Retrofit",response.body().toString());
+
             }
 
             @Override
@@ -42,8 +47,22 @@ public class MainActivityPresenter{
         });
     }
 
-    void download() {
-        String url = "http://cdn.llsapp.com/yy/image/3b0430db-5ff4-455c-9c8d-0213eea7b6c4.jpg";
+    void testPost(){
+        Api.getTestApi().testPost(new PostBean()).enqueue(new Callback<JsonBeanResponse>() {
+            @Override
+            public void onResponse(Call<JsonBeanResponse> call, Response<JsonBeanResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonBeanResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    void testdownload() {
+        String url = "https://repo1.maven.org/maven2/com/squareup/okhttp3/mockwebserver/3.12.1/mockwebserver-3.12.1.jar";
 
         FileDownloadRequest fileDownloadRequest = new FileDownloadRequest();
         fileDownloadRequest.setFileName("pic.jpg");
@@ -54,7 +73,7 @@ public class MainActivityPresenter{
                 Log.i("Retrofit","bytesRead "  + bytesRead + " contentLength " + contentLength);
             }
         });
-        Api.getTestApiName().download(url,fileDownloadRequest).enqueue(new LifeCallAdapterFactory.LifeCallback<File>(mainActivity) {
+        Api.getTestApi().download(url,fileDownloadRequest).enqueue(new LifeCallAdapterFactory.LifeCallback<File>(mainActivity) {
             @Override
             public void onResponse(Call<File> call, Response<File> response) {
 
@@ -67,7 +86,7 @@ public class MainActivityPresenter{
         });
     }
 
-    void upLoad(){
+    void testUpLoad(){
         //sample for compress image
         Bitmap bmp = BitmapFactory.decodeFile("");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
