@@ -1,25 +1,34 @@
 package com.bty.retrofit.demo.log.FloatingWindow;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.bty.retrofit.demo.R;
 
 public class LogDetailActivity extends AppCompatActivity {
+
+    private ClipboardManager clipboardManager;
+    private OkHttpRequestLog log;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_detail_layout);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> LogDetailActivity.this.finish());
+        clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
-        OkHttpRequestLog log = (OkHttpRequestLog) getIntent().getSerializableExtra("log");
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
+        String name = getIntent().getStringExtra("name");
+        toolbar.setTitle(name);
+        log = (OkHttpRequestLog) getIntent().getSerializableExtra("log");
 
         TextView url = findViewById(R.id.detail_url);
         TextView method = findViewById(R.id.detail_method);
@@ -28,11 +37,13 @@ public class LogDetailActivity extends AppCompatActivity {
         TextView requestHeader = findViewById(R.id.detail_request_header);
         TextView requestBody = findViewById(R.id.detail_request_body);
         TextView responseBody = findViewById(R.id.detail_response_body);
+        TextView tookMs = findViewById(R.id.detail_tookms);
 
         url.setText(log.url);
         method.setText(log.method);
         statusCode.setText(log.statusCode);
         timestamp.setText(log.timeStamp);
+        tookMs.setText(String.format("%sms", log.tookMs));
         requestHeader.setText(log.requestHeaders);
         findViewById(R.id.detail_request_body_layout)
                 .setVisibility(TextUtils.isEmpty(log.requestBody) ? View.GONE : View.VISIBLE);
@@ -41,4 +52,24 @@ public class LogDetailActivity extends AppCompatActivity {
     }
 
 
+    public void copyResponse(View view) {
+        if (log != null) {
+            try {
+                clipboardManager.setText(log.responseBody);
+                Toast.makeText(this,"复制成功",Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    public void copyRequest(View view) {
+        if (log != null) {
+            try {
+                clipboardManager.setText(log.requestBody);
+                Toast.makeText(this,"复制成功",Toast.LENGTH_SHORT).show();
+            }catch (Exception e){
+            }
+        }
+    }
 }

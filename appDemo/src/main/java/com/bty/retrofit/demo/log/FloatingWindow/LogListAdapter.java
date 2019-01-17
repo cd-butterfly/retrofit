@@ -2,6 +2,7 @@ package com.bty.retrofit.demo.log.FloatingWindow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,18 +42,27 @@ public class LogListAdapter extends BaseAdapter {
     public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.debug_list_item,null);
+            view = LayoutInflater.from(context).inflate(R.layout.debug_list_item, null);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.textViewUrl.setText(data.get(i).url);
+
+        if ("200".equals(data.get(i).statusCode)) {
+            view.setBackgroundColor(Color.WHITE);
+        } else {
+            view.setBackgroundColor(Color.parseColor("#ff3939"));
+        }
+
+        String[] urlStr = data.get(i).url.split("/");
+        viewHolder.textViewUrl.setText(urlStr[urlStr.length - 1]);
         viewHolder.textViewTime.setText(data.get(i).timeStamp);
 
         view.setOnClickListener(v -> {
-            Intent intent = new Intent(context,LogDetailActivity.class);
-            intent.putExtra("log",data.get(i));
+            Intent intent = new Intent(context, LogDetailActivity.class);
+            intent.putExtra("log", data.get(i));
+            intent.putExtra("name", urlStr[urlStr.length - 1]);
             context.startActivity(intent);
         });
 

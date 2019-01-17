@@ -10,4 +10,6 @@ public class OkHttpRequestLog implements Serializable {
     public String method;
     public String requestHeaders;
     public String statusCode;
+    public String tookMs;
+    public String bodySize;
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="black_10_color">#1A000000</color>
     <color name="black_54_color">#8A000000</color>
     <color name="black_60_color">#99000000</color>
     <color name="black_50_color">#80000000</color>
