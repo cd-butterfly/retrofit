@@ -10,6 +10,7 @@ import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -42,15 +43,18 @@ public class ServiceProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnvironment) {
+        generateApiFile(processServiceAnnotations(roundEnvironment));
+        return true;
+    }
 
-        ArrayList<MethodSpec> methodSpecs = new ArrayList<>();
+    private HashMap<String, ArrayList<MethodSpec>> processServiceAnnotations(RoundEnvironment roundEnvironment){
 
-        String packageName = "";
+        HashMap<String,ArrayList<MethodSpec>> hashMap = new HashMap<>();
 
         for (Element element : roundEnvironment.getElementsAnnotatedWith(Service.class)) {
             if (!SuperficialValidation.validateElement(element)) continue;
 
-            packageName = ClassName.bestGuess(element.asType().toString()).packageName();
+            String packageName = ClassName.bestGuess(element.asType().toString()).packageName();
 
             Service annotation = element.getAnnotation(Service.class);
 
@@ -82,31 +86,44 @@ public class ServiceProcessor extends AbstractProcessor {
                         addStatement("return $T.create($T.class)", RETROFIT, ClassName.bestGuess(typeElement.getQualifiedName().toString())).build();
             }
 
-            methodSpecs.add(methodSpec);
-        }
-
-        TypeSpec.Builder apiBuilder = TypeSpec.classBuilder("Api")
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
-
-        for (MethodSpec methodSpec : methodSpecs) {
-            apiBuilder.addMethod(methodSpec);
-        }
-
-        try {
-            if (packageName != null && !packageName.equals("")) {
-
-                messager.printMessage(Diagnostic.Kind.NOTE,packageName);
-
-                JavaFile javaFile = JavaFile.builder(packageName, apiBuilder.build())
-                        .addFileComment("This codes are generated automatically. Do not modify!")
-                        .build();
-                javaFile.writeTo(filer);
+            if (hashMap.containsKey(packageName)){
+                ArrayList<MethodSpec> methodSpecs = hashMap.get(packageName);
+                methodSpecs.add(methodSpec);
+                hashMap.put(packageName,methodSpecs);
+            } else {
+                ArrayList<MethodSpec> methodSpecs = new ArrayList<>();
+                methodSpecs.add(methodSpec);
+                hashMap.put(packageName,methodSpecs);
             }
-        } catch (IOException e) {
-            error(e.toString());
         }
 
-        return true;
+        return hashMap;
+    }
+
+
+    private void generateApiFile(HashMap<String,ArrayList<MethodSpec>> hashMap){
+        for (String packageName : hashMap.keySet()){
+            TypeSpec.Builder apiBuilder = TypeSpec.classBuilder("Api")
+                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+
+            ArrayList<MethodSpec> methodSpecs = hashMap.get(packageName);
+
+            for (MethodSpec methodSpec : methodSpecs) {
+                apiBuilder.addMethod(methodSpec);
+            }
+
+            try {
+                if (packageName != null && !packageName.equals("")) {
+                    messager.printMessage(Diagnostic.Kind.NOTE," Api packageName "+ packageName);
+                    JavaFile javaFile = JavaFile.builder(packageName, apiBuilder.build())
+                            .addFileComment("This codes are generated automatically. Do not modify!")
+                            .build();
+                    javaFile.writeTo(filer);
+                }
+            } catch (IOException e) {
+                error(e.toString());
+            }
+        }
     }
 
     private void error(String string) {
