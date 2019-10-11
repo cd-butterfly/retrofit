@@ -4,7 +4,7 @@ dependencies {
     implementation project(':annotation')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.squareup:javapoet:1.11.1'
-    implementation  group: 'com.google.auto.service', name: 'auto-service', version: '1.0-rc2'
+    implementation  group: 'com.google.auto.service', name: 'auto-service', version: '1.0-rc6'
 }
 
 sourceCompatibility = "7"

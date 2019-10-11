@@ -11,14 +11,14 @@ grab via Maven:
 <dependency>
   <groupId>com.github.cd-butterfly</groupId>
   <artifactId>retrofit</artifactId>
-  <version>1.0.4-SNAPSHOT</version>
+  <version>1.0.6</version>
   <type>aar</type>
 </dependency>
 
 <dependency>
   <groupId>com.github.cd-butterfly</groupId>
   <artifactId>retrofit-compiler</artifactId>
-  <version>1.0.4-SNAPSHOT</version>
+  <version>1.0.6</version>
 </dependency>
 
 ```
@@ -28,15 +28,15 @@ project build.gradle :
 
 ```groovy
 repositories {
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    mavenCentral()
 }
 ```
 
 module build.gradle
 
 ```groovy
-implementation 'com.github.cd-butterfly:retrofit:1.0.4-SNAPSHOT'
-annotationProcessor  'com.github.cd-butterfly:retrofit-compiler:1.0.4-SNAPSHOT'
+implementation 'com.github.cd-butterfly:retrofit:1.0.6'
+annotationProcessor  'com.github.cd-butterfly:retrofit-compiler:1.0.6'
 ```
 
 License
