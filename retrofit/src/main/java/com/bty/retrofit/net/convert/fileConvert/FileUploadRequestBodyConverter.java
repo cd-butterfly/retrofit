@@ -1,6 +1,7 @@
 package com.bty.retrofit.net.convert.fileConvert;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.bty.retrofit.net.bean.FileUploadRequest;
 import com.bty.retrofit.net.bean.FormFile;

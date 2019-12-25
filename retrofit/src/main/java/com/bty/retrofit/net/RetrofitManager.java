@@ -1,9 +1,8 @@
 package com.bty.retrofit.net;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
-
+import androidx.annotation.NonNull;
 import com.bty.retrofit.net.callAdapter.LifeCallAdapterFactory;
 import com.bty.retrofit.net.convert.fileConvert.FileDownloadConverterFactory;
 import com.bty.retrofit.net.convert.fileConvert.FileUploadConverterFactory;
@@ -14,18 +13,16 @@ import com.bty.retrofit.net.serurity.Sign;
 import com.bty.retrofit.net.serurity.sign.DefaultSignFactory;
 import com.bty.retrofit.net.ssl.TrustAllCerts;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-
+import java.net.Proxy;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -161,14 +158,15 @@ public class RetrofitManager {
         //config headers,timeout,interceptors
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        builder.addInterceptor(new HeaderInterceptor(config.headers))
+        builder.proxy(config.proxy)
+                .addInterceptor(new HeaderInterceptor(config.headers))
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(new FileDownloadInterceptor())
                 .sslSocketFactory(sslSocketFactory, x509TrustManager)
                 .cookieJar(cookieJar)
-                .connectTimeout(config.connectTimeout,TimeUnit.MILLISECONDS)
-                .writeTimeout(config.writeTimeout,TimeUnit.MILLISECONDS)
-                .readTimeout(config.readTimeout,TimeUnit.MILLISECONDS);
+                .connectTimeout(config.connectTimeout, TimeUnit.MILLISECONDS)
+                .writeTimeout(config.writeTimeout, TimeUnit.MILLISECONDS)
+                .readTimeout(config.readTimeout, TimeUnit.MILLISECONDS);
 
         if (config.interceptors != null && config.interceptors.size() > 0) {
             for (Interceptor interceptor : config.interceptors) {
@@ -208,6 +206,7 @@ public class RetrofitManager {
         private Sign.Factory factory;
         private X509TrustManager certs;
         private SSLSocketFactory sslSocketFactory;
+        private Proxy proxy;
         private HashMap<String, String> headers;
         private List<Interceptor> interceptors;
         private Converter.Factory converterFactory;
@@ -221,6 +220,7 @@ public class RetrofitManager {
             this.factory = builder.signFactory;
             this.certs = builder.certs;
             this.sslSocketFactory = builder.sslSocketFactory;
+            this.proxy = builder.proxy;
             this.headers = builder.headers;
             this.interceptors = builder.interceptors;
             this.converterFactory = builder.converterFactory;
@@ -269,6 +269,14 @@ public class RetrofitManager {
             this.certs = certs;
         }
 
+        public Proxy getProxy() {
+            return proxy;
+        }
+
+        public void setProxy(Proxy proxy) {
+            this.proxy = proxy;
+        }
+
         public static final class Builder {
 
             private int writeTimeout;
@@ -279,6 +287,7 @@ public class RetrofitManager {
             private Sign.Factory signFactory;
             private X509TrustManager certs;
             private SSLSocketFactory sslSocketFactory;
+            private Proxy proxy;
             private HashMap<String, String> headers = new HashMap<>();
             private List<Interceptor> interceptors;
             private Converter.Factory converterFactory;
@@ -341,9 +350,14 @@ public class RetrofitManager {
                 this.writeTimeout = writeTimeout;
             }
 
+            public void setProxy(Proxy proxy) {
+                this.proxy = proxy;
+            }
+
             public Config build() {
                 return new Config(this);
             }
+
         }
     }
 

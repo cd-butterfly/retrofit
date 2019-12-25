@@ -11,14 +11,14 @@ grab via Maven:
 <dependency>
   <groupId>com.github.cd-butterfly</groupId>
   <artifactId>retrofit</artifactId>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
   <type>aar</type>
 </dependency>
 
 <dependency>
   <groupId>com.github.cd-butterfly</groupId>
   <artifactId>retrofit-compiler</artifactId>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
 </dependency>
 
 ```
@@ -35,8 +35,8 @@ repositories {
 module build.gradle
 
 ```groovy
-implementation 'com.github.cd-butterfly:retrofit:1.0.6'
-annotationProcessor  'com.github.cd-butterfly:retrofit-compiler:1.0.6'
+implementation 'com.github.cd-butterfly:retrofit:1.0.7'
+annotationProcessor  'com.github.cd-butterfly:retrofit-compiler:1.0.7'
 ```
 
 License

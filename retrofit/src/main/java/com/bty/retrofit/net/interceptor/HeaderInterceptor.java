@@ -1,6 +1,6 @@
 package com.bty.retrofit.net.interceptor;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.io.IOException;
 import java.util.HashMap;

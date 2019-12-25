@@ -4,16 +4,15 @@ import android.app.Application;
 
 import com.bty.retrofit.demo.interceptor.HeaderInterceptor;
 import com.bty.retrofit.demo.interceptor.LogDebugInterceptor;
-import com.bty.retrofit.demo.util.SignUtil;
 import com.bty.retrofit.net.RetrofitManager;
-import com.bty.retrofit.net.serurity.Sign;
 import com.facebook.stetho.Stetho;
-import okhttp3.Interceptor;
 
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import okhttp3.Interceptor;
 
 /**
  * Created by duo.chen on 2018/6/14
@@ -35,6 +34,7 @@ public class App extends Application {
         interceptors.add(new HeaderInterceptor());
         interceptors.add(new LogDebugInterceptor());
         builder.setInterceptors(interceptors);
+        builder.setProxy(Proxy.NO_PROXY);
 
         builder.setBaseUrl(BuildConfig.BASE_URL)
                 .setLog(true)
