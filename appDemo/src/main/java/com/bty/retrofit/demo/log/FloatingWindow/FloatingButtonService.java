@@ -27,10 +27,19 @@ public class FloatingButtonService extends Service {
 
     private WindowManager windowManager;
     private WindowManager.LayoutParams layoutParams;
+    private int statusBarHeight;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        int resourceId = this.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = this.getResources().getDimensionPixelSize(resourceId);
+        } else {
+            statusBarHeight = this.getResources().getDimensionPixelOffset(R.dimen._20);
+        }
+
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         layoutParams = new WindowManager.LayoutParams();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -39,8 +48,10 @@ public class FloatingButtonService extends Service {
             layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         }
         layoutParams.format = PixelFormat.RGBA_8888;
-        layoutParams.gravity = Gravity.LEFT | Gravity.TOP;
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        layoutParams.gravity = Gravity.START | Gravity.TOP;
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
         layoutParams.width = getResources().getDimensionPixelOffset(R.dimen._48);
         layoutParams.height = getResources().getDimensionPixelOffset(R.dimen._48);
         layoutParams.x = 900;
@@ -105,6 +116,9 @@ public class FloatingButtonService extends Service {
                 case MotionEvent.ACTION_MOVE:
                     int nowX = (int) event.getRawX();
                     int nowY = (int) event.getRawY();
+                    if (nowY <= statusBarHeight) {
+                        nowY = y;
+                    }
                     int movedX = nowX - x;
                     int movedY = nowY - y;
                     x = nowX;
